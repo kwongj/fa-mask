@@ -36,4 +36,4 @@ Please submit via the [GitHub issues page](https://github.com/kwongj/fa-mask/iss
 
 ##Software Licence
 
-[GPLv3](https://github.com/kwongj/fa-mask/blob/master/LICENCE)
+[GPLv3](https://github.com/kwongj/fa-mask/blob/master/LICENSE)
