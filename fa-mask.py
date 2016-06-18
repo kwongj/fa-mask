@@ -10,6 +10,7 @@ import argparse
 from argparse import RawTextHelpFormatter
 import os
 import sys
+import StringIO
 import pandas as pd
 from pandas import DataFrame
 from Bio import SeqIO
@@ -21,12 +22,12 @@ from Bio.SeqRecord import SeqRecord
 parser = argparse.ArgumentParser(
 	formatter_class=RawTextHelpFormatter,
 	description='Script to mask specified regions in FASTA sequence',
-	usage='\n  %(prog)s --regions <FILE> FASTA')
+	usage='\n  %(prog)s --regions <FILE> FASTA > masked.fa')
 parser.add_argument('fasta', metavar='FASTA', nargs=1, help='FASTA sequence to modify (required)')
 parser.add_argument('--regions', metavar='FILE', nargs=1, required=True, help='Tab-separated file with 3 columns: LOCUS START END (BED format) (required)')
 parser.add_argument('--mask', metavar='N', nargs=1, default='N', help='Symbol to use for masking regions (default = "N").'
 	'\nUse "--mask lc" to perform soft masking in lower case')
-parser.add_argument('--out', metavar='OUTPUT', nargs=1, required=True, help='Output file for new genome')
+parser.add_argument('--out', metavar='FILE', nargs=1, help='Output file for new genome (optional - otherwise will print to stdout)')
 parser.add_argument('--version', action='version', version=
 	'=====================================\n'
 	'%(prog)s v0.1\n'
@@ -56,7 +57,8 @@ check_file(seqfile)
 regfile = args.regions[0]
 check_file(regfile)
 symbol = args.mask[0]
-outfile = args.out[0]
+if args.out:
+	outfile = args.out[0]
 
 # Parse masking regions
 with open(regfile, 'rb') as f:
@@ -90,8 +92,14 @@ for record in SeqIO.parse(fa, 'fasta'):
 	else:
 		seqMASK.append(record)
 
-# Write masked alignment to file
-msg('Masked sequences saved to "{}" ... '.format(outfile))
-SeqIO.write(seqMASK, outfile, 'fasta')
+# Write masked alignment to file or print to stdout
+if args.out:
+	msg('Masked sequences saved to "{}" ... '.format(outfile))
+	SeqIO.write(seqMASK, outfile, 'fasta')
+else:
+	seqFILE = StringIO.StringIO()
+	SeqIO.write(seqMASK, seqFILE, 'fasta')
+	output = seqFILE.getvalue().rstrip()
+	print(output)
 
 sys.exit(0)

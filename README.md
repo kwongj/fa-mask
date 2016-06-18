@@ -14,9 +14,9 @@ Jason Kwong (@kwongjc)
 ```
 $ fa-mask.py -h
 usage: 
-  fa-mask.py --regions <FILE> FASTA
+  fa-mask.py --regions <FILE> FASTA > masked.fa
 
-Script to mask specified regions in a FASTA sequence
+Script to mask specified regions in FASTA sequence
 
 positional arguments:
   FASTA           FASTA sequence to modify (required)
@@ -26,7 +26,7 @@ optional arguments:
   --regions FILE  Tab-separated file with 3 columns: LOCUS START END (BED format) (required)
   --mask N        Symbol to use for masking regions (default = "N").
                   Use "--mask lc" to perform soft masking in lower case
-  --out OUTPUT    Output file for new genome
+  --out FILE      Output file for new genome (optional - otherwise will print to stdout)
   --version       show program's version number and exit
 ```
 
