@@ -6,7 +6,7 @@ Masks specified regions in FASTA sequences
 Jason Kwong (@kwongjc)
 
 ## Dependencies
-* Python 2.7.x
+* Python 3.x
 * BioPython
 
 ## Usage
