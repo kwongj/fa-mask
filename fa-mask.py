@@ -2,9 +2,6 @@
 # Script by Jason Kwong
 # Script to mask specified regions in FASTA sequence
 
-# Use modern print function from python 3.x
-#from __future__ import print_function
-
 # Import modules
 import argparse
 from argparse import RawTextHelpFormatter
@@ -92,7 +89,6 @@ if args.out:
 	msg('Masked sequences saved to "{}" ... '.format(outfile))
 	SeqIO.write(seqMASK, outfile, 'fasta')
 else:
-# 	seqFILE = StringIO.StringIO()
 	seqFILE = StringIO()
 	SeqIO.write(seqMASK, seqFILE, 'fasta')
 	output = seqFILE.getvalue().rstrip()
