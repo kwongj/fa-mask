@@ -1,15 +1,15 @@
 # fa-mask
 Masks specified regions in FASTA sequences
 
-##Author
+## Author
 
 Jason Kwong (@kwongjc)
 
-##Dependencies
+## Dependencies
 * Python 2.7.x
 * BioPython
 
-##Usage
+## Usage
 
 ```
 $ fa-mask.py -h
@@ -30,10 +30,10 @@ optional arguments:
   --version       show program's version number and exit
 ```
 
-##Bugs
+## Bugs
 
 Please submit via the [GitHub issues page](https://github.com/kwongj/fa-mask/issues).  
 
-##Software Licence
+## Software Licence
 
 [GPLv3](https://github.com/kwongj/fa-mask/blob/master/LICENSE)
