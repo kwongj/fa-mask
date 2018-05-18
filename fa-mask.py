@@ -1,16 +1,16 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # Script by Jason Kwong
 # Script to mask specified regions in FASTA sequence
 
 # Use modern print function from python 3.x
-from __future__ import print_function
+#from __future__ import print_function
 
 # Import modules
 import argparse
 from argparse import RawTextHelpFormatter
 import os
 import sys
-import StringIO
+from io import StringIO
 import pandas as pd
 from pandas import DataFrame
 from Bio import SeqIO
@@ -28,12 +28,7 @@ parser.add_argument('--regions', metavar='FILE', nargs=1, required=True, help='T
 parser.add_argument('--mask', metavar='N', nargs=1, default='N', help='Symbol to use for masking regions (default = "N").'
 	'\nUse "--mask lc" to perform soft masking in lower case')
 parser.add_argument('--out', metavar='FILE', nargs=1, help='Output file for new genome (optional - otherwise will print to stdout)')
-parser.add_argument('--version', action='version', version=
-	'=====================================\n'
-	'%(prog)s v0.1\n'
-	'Updated 31-May-2016 by Jason Kwong\n'
-	'Dependencies: Python 2.x, BioPython\n'
-	'=====================================')
+parser.add_argument('--version', action='version', version='v0.2')
 args = parser.parse_args()
 
 # Functions
@@ -61,7 +56,7 @@ if args.out:
 	outfile = args.out[0]
 
 # Parse masking regions
-with open(regfile, 'rb') as f:
+with open(regfile, 'r') as f:
 	fline = f.readline()
 	if fline.startswith('#'):
 		h = 0
@@ -73,7 +68,7 @@ loci = set(loci)
 
 # Parse sequence
 seqMASK = []
-fa = open(seqfile, 'rU')
+fa = open(seqfile, 'r')
 for record in SeqIO.parse(fa, 'fasta'):
 	msg('Reading "{}" ... '.format(record.id))
 	seqlen = len(record.seq)
@@ -97,7 +92,8 @@ if args.out:
 	msg('Masked sequences saved to "{}" ... '.format(outfile))
 	SeqIO.write(seqMASK, outfile, 'fasta')
 else:
-	seqFILE = StringIO.StringIO()
+# 	seqFILE = StringIO.StringIO()
+	seqFILE = StringIO()
 	SeqIO.write(seqMASK, seqFILE, 'fasta')
 	output = seqFILE.getvalue().rstrip()
 	print(output)
